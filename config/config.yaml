@@ -124,7 +124,25 @@ customConfig: # custom config for specific orgs or repos
     refs:
       - org: qbox
         repo: ffmpeg
-        pathAlias: "src/qbox.com/ffmpeg"
+        pathAlias: "src/qiniu.com/ffmpeg"
+      - org: "qbox"
+        repo: "base"
+    linters:
+      golangci-lint:
+        enable: true
+        command:
+          - "/bin/sh"
+          - "-c"
+          - "--"
+        args:
+          - |
+            pwd
+            export $GOPATH=${pwd}
+            cd base && source env.sh
+            cd ../src/qiniu.com/ffmpeg
+            golangci-lint run --enable-all --timeout=15m0s --allow-parallel-runners=true --print-issued-lines=false --out-format=line-number >> $ARTIFACT/lint.log 2>&1
+        dockerAsRunner:
+          image: "aslan-spock-register.qiniu.io/reviewbot/base:golangci-lint.ffmpeg.1.59.1"
 
 issueReferences:
   golangci-lint:

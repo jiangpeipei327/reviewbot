@@ -19,6 +19,6 @@ COPY deploy/github-known-hosts /github_known_hosts
 
 # set go proxy and private repo
 RUN go env -w GOPROXY=https://goproxy.cn,direct \
-    && go env -w GOPRIVATE=github.com/qbox,qiniu.com
+    && go env -w GOPRIVATE=github.com/qbox,qiniu.coms
 
 EXPOSE 8888
