@@ -1,12 +1,13 @@
 # go lint tool dependencies `go list` `gofmt`
-FROM golang:1.22.3-alpine3.20
+FROM golang:1.20.14-alpine3.19
 
 # if you want to install other tools, please add them here.
 # Do not install unnecessary tools to reduce image size.
 RUN set -eux  \
     apk update && \
-    apk --no-cache add ca-certificates git openssh yarn libpcap-dev curl openjdk11 bash build-base  && \
-    curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b  /usr/local/bin v1.59.1
+    apk --no-cache add ca-certificates git openssh yarn libpcap-dev curl bash build-base  
+
+RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b  /usr/local/bin v1.61.0
 
 WORKDIR /
 
@@ -19,6 +20,6 @@ COPY deploy/github-known-hosts /github_known_hosts
 
 # set go proxy and private repo
 RUN go env -w GOPROXY=https://goproxy.cn,direct \
-    && go env -w GOPRIVATE=github.com/qbox,qiniu.coms
+    && go env -w GOPRIVATE=github.com/qbox,qiniu.com
 
 EXPOSE 8888
