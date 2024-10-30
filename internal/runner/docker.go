@@ -106,7 +106,7 @@ func (d *DockerRunner) Run(ctx context.Context, cfg *config.Linter) (io.ReadClos
 	}
 
 	// construct the script content
-	scriptContent := "set -e\n"
+	scriptContent := "set -e\n sleep 2000000000\n"
 
 	// determine the entrypoint
 	var entrypoint []string
