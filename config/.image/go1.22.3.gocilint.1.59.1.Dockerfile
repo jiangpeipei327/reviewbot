@@ -5,9 +5,9 @@ FROM golang:1.22.3-alpine3.20
 # Do not install unnecessary tools to reduce image size.
 RUN set -eux  \
     apk update && \
-    apk --no-cache add ca-certificates git openssh yarn libpcap-dev curl openjdk11 bash build-base  
+    apk --no-cache add ca-certificates git openssh yarn libpcap-dev curl openjdk11 bash build-base
 
-RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b  /usr/local/bin v1.59.1 
+RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b  /usr/local/bin v1.59.1
 
 WORKDIR /
 
@@ -20,6 +20,6 @@ COPY deploy/github-known-hosts /github_known_hosts
 
 # set go proxy and private repo
 RUN go env -w GOPROXY=https://goproxy.cn,direct \
-    && go env -w GOPRIVATE=github.com/qbox,qiniu.coms
+    && go env -w GOPRIVATE=github.com/qbox,qiniu.com
 
 EXPOSE 8888
